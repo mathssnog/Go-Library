@@ -1,10 +1,9 @@
 # Biblioteca
-- struct livro
-- struct usuario
-- criar api server
-- criar endpoint listar usuarios
-- criar endpoint listar livros
-- criar endpoint pegar user pelo ID
+- struct livro [OK]
+- struct usuario [OK]
+- criar api server [OK]
+- criar endpoint listar usuarios [OK]
+- criar endpoint listar livros [OK]
 - criar endpoint de cadastro de usuário
 - criar endpoint de cadastro de usuário
 - criar endpoint de atualizar usuário por id
@@ -58,21 +57,23 @@ O banco de dados utilizado neste projeto será o PostgreSQL:
         - sudo systemctl status postgresql
 
     - Podemos conectar ao postgreSQL utilizamos o seguinte comando:
-        - sudo -u postgres psql
-    
+        - `sudo -u postgres psql` (conectamos com o usuário postgres)
+        - `psql -h localhost -p 5432 -U livros_admin -d livros (Conectamos com o usuário "livros_admin" no database )`
+
+
     - Após a conexão com o postgreSQL, podemos realizar o seguinte comando:
         - <comando para criar o usuário e db>
-        - CREATE DATABASE livros; 
-            - Verifica-se em \l (list of db)
-        - CREATE USER livros_admin WITH PASSWORD '123';
-        - ALTER ROLE livros_admin SET client_encoding TO 'utf8';
-        - ALTER ROLE livros_admin SET timezone TO 'UTC';
-        - GRANT ALL PRIVILEGES ON DATABASE livros TO livros_admin;
-
+        - `CREATE DATABASE livros;` 
+            - Verifica-se em `\l` (list of db)
+        - `CREATE USER livros_admin WITH PASSWORD '123';`
+        - `ALTER ROLE livros_admin SET client_encoding TO 'utf8';`
+        - `ALTER ROLE livros_admin SET timezone TO 'UTC';`
+        - `GRANT ALL PRIVILEGES ON DATABASE livros TO livros_admin;`
+        
+        Obs.: Foram criadas as tabelas 'livro' e 'usuario'
         Obs.: Alteração no arquivo: /etc/postgresql/14/main/pg_hba.conf
         Para autenticação por senha para todas as conexões locais   -> mudança do tipo peer para md5.
 
 **Linguagem**
 
 - A aplicação será desenvolvido em Golang.
-
