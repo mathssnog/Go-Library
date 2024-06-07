@@ -4,8 +4,8 @@
 - criar api server [OK]
 - criar endpoint listar usuarios [OK]
 - criar endpoint listar livros [OK]
-- criar endpoint de cadastro de usuário
-- criar endpoint de cadastro de usuário
+- criar endpoint de cadastro de usuário [OK]
+- criar endpoint de cadastro de usuário [OK]
 - criar endpoint de atualizar usuário por id
 - criar endpoint de atualizar livro por id
 - criar endpoint deletar usuario
