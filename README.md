@@ -8,8 +8,8 @@
 - criar endpoint de cadastro de usuário [OK]
 - criar endpoint de atualizar usuário por id
 - criar endpoint de atualizar livro por id
-- criar endpoint deletar usuario
-- criar endpoint deletar livro
+- criar endpoint deletar usuario [OK]
+- criar endpoint deletar livro [OK]
 
 Aplicação para gerenciamento de bibliotecas. Considerações:
 

@@ -82,8 +82,9 @@ func main() {
 		}
 
 		// Registrar usuário no banco de dados 'livros' na tabela 'usuario'
-		_, err := db.Exec("INSERT INTO usuario (name, email, id) VALUES ($1, $2, $3)", user.Name, user.Email, user.ID)
+		_, err := db.Exec("INSERT INTO usuario (id, nome, email) VALUES ($1, $2, $3)", user.ID, user.Name, user.Email)
 		if err != nil {
+			fmt.Println("Error inserting user:", err) // Log para debbug
 			return fmt.Errorf("could not insert user: %w", err)
 		}
 
@@ -109,6 +110,7 @@ func main() {
 		// Registrando o livro na table 'livro'
 		_, err := db.Exec("INSERT INTO livro (titulo, autor, year, editor) VALUES ($1, $2, $3, $4)", livro.Titulo, livro.Autor, livro.Year, livro.Editor)
 		if err != nil {
+			fmt.Println("Error inserting user:", err) // Log para debbug
 			return fmt.Errorf("could not insert livro: %w", err)
 		}
 
@@ -117,18 +119,44 @@ func main() {
 		return c.JSON(http.StatusOK, livro)
 	})
 
+	// Rota para deletar usuários com base no seu ID:
+	e.DELETE("delete/user/:id", func(c echo.Context) error {
+		id := c.Param("id")
+		_, err := db.Exec("DELETE FROM usuario WHERE id=$1", id)
+		if err != nil {
+			fmt.Println("Error inserting user:", err) // Log para debbug
+			return fmt.Errorf("could not delete user: %w", err)
+		}
+		return c.String(http.StatusOK, fmt.Sprintf("User with ID %s deleted successfully", id))
+	})
+
+	// Rota para deletar livros com base no Título:
+	e.DELETE("delete/livro/titulo", func(c echo.Context) error {
+		titulo := c.Param("titulo")
+		_, err := db.Exec("DELETE FROM livro WHERE titulo=$1", titulo)
+		if err != nil {
+			fmt.Println("Error inserting user:", err) // Log para debbug
+			return fmt.Errorf("could not delete user: %w", err)
+		}
+		return c.String(http.StatusOK, fmt.Sprintf("User with Título %s deleted successfully", titulo))
+	})
+
 	// Rota para listar usuários
+	// Lembrando que "db" é a conexão com o banco definido na função Connect()
+	// "rows" é o resultado da consulta 'Query'
+	// Gin REST api: https://deadsimplechat.com/blog/rest-api-with-golang-and-postgresql/
 	e.GET("list/users", func(c echo.Context) error {
-		rows, err := db.Query("SELECT name, email, id FROM usuario")
+		rows, err := db.Query("SELECT nome, email, id FROM usuario")
 		if err != nil {
 			return fmt.Errorf("could not get users: %w", err)
 		}
-		defer rows.Close()
+		defer rows.Close() // Defer é utilizada para executar a função a qual foi chamada, nesse caso foi o rows.Close(). Essa função fecha a o resultado da consulta rows.
 
 		var users []User
-		for rows.Next() {
+		for rows.Next() { //loop nos dados retornados pela query
 			var user User
 			if err := rows.Scan(&user.Name, &user.Email, &user.ID); err != nil {
+				fmt.Println("Error inserting user:", err) // Log para debbug
 				return fmt.Errorf("could not scan user: %w", err)
 			}
 			users = append(users, user)
@@ -136,7 +164,7 @@ func main() {
 		if err := rows.Err(); err != nil {
 			return fmt.Errorf("rows error: %w", err)
 		}
-		return c.JSON(http.StatusOK, users)
+		return c.JSON(http.StatusOK, users) // format type JSON
 	})
 
 	// Rota para listar livros
