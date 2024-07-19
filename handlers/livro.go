@@ -61,14 +61,26 @@ func ListLivro(db *sql.DB) echo.HandlerFunc {
 	}
 }
 
+type RemoveLivro struct {
+	Titulo string `json:"titulo"`
+}
+
 func Deletelivro(db *sql.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		titulo := c.Param("titulo")
+		var req RemoveLivro
+		if err := c.Bind(&req); err != nil {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid request"})
+		}
+		titulo := req.Titulo
 		_, err := db.Exec("DELETE FROM livro WHERE titulo=$1", titulo)
 		if err != nil {
 			fmt.Println("Error inserting livro:", err) // Log para debbug
 			return fmt.Errorf("could not delete livro: %w", err)
 		}
-		return c.String(http.StatusOK, fmt.Sprintf("User with Título %s deleted successfully", titulo))
+		return c.String(http.StatusOK, fmt.Sprintf("Livro with Título %s deleted successfully", titulo))
 	}
 }
+
+// Vamos precisar agora alterar em todas as rotas que deletam para que elas consigam receber a
+// requsição curl no seu corpo. por exemplo:
+// curl -X DELETE http://localhost:8080/delete/livro -H "Content-Type: application/json" -d '{"titulo":"MMMatheus"}'

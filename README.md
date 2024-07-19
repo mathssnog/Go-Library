@@ -6,20 +6,25 @@
 - criar endpoint listar livros [OK]
 - criar endpoint de cadastro de usuário [OK]
 - criar endpoint de cadastro de usuário [OK]
-- criar endpoint de atualizar usuário por id
-- criar endpoint de atualizar livro por id
 - criar endpoint deletar usuario [OK]
 - criar endpoint deletar livro [OK]
+- criar endpoint de empréstimos
+- criar enpoint de devolução
+- criar tabela de livros [OK]
+- criar tabela de usuários [OK]
+- criar tabela de empréstimos/devolução
+- 
+
 
 Aplicação para gerenciamento de bibliotecas. Considerações:
 
 Sistema de gerenciamento de uma biblioteca que permite a organização e controle de livros, membros, empréstimos, devoluções e reservas. O sistema será implementado em Python, utilizando o framework Flask e PostgreSQL como banco de dados. O sistema deve:
 
 1. **Cadastrar Livros**:
-    Para o cadastro de livros vamos ter algumas variáveis como título do livro, autor(es), número de cópias disponíveis, editora e ano de publicação.
+    Para o cadastro de livros vamos ter algumas variáveis como título do livro, autor(es), número de cópias disponíveis, editora e ano de publicação. [OK]
 
 2. **Cadastrar Membros**:
-    Para o cadastro de membros vamos ter algumas variáveis como nome, ID e informações pessoais.
+    Para o cadastro de membros vamos ter algumas variáveis como nome, ID e informações pessoais. [OK]
    
 3. **Empréstimos**:
     Para o empréstimos de livros vamos ter variáveis como registro do membro que solicitou o empréstimo e sua data.
@@ -27,7 +32,7 @@ Sistema de gerenciamento de uma biblioteca que permite a organização e control
 4. **Devoluções**:
     Para a devolução, será registrado o membro que realizou a devolução e sua data. Vale lembrar que pode-se aplicar multas à entregas atrasadas.
 
-5. **Reservas**:
+5. **Lista de espera**:
     Esta seção seria para caso acontecesse uma grande demanda de um mesmo livro, onde será necessário uma fila com base na ordem de solicitação do livro.
 
 6. **Pesquisa e Filtros**:
@@ -54,7 +59,7 @@ O banco de dados utilizado neste projeto será o PostgreSQL:
 
 - Instalação do PostgreSQL em [postgresql.org](https://www.postgresql.org/).
     - Verificação do status do postgres, após a instação
-        - sudo systemctl status postgresql
+        - `sudo systemctl status postgresql`
 
     - Podemos conectar ao postgreSQL utilizamos o seguinte comando:
         - `sudo -u postgres psql` (conectamos com o usuário postgres)

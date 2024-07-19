@@ -11,7 +11,7 @@ import (
 
 // São as funções que vão lidar com as rotas.
 
-func Adduser(db *sql.DB) echo.HandlerFunc {
+func AddUser(db *sql.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		user := new(structs.User)
 		if err := c.Bind(user); err != nil {
@@ -68,15 +68,23 @@ func ListUser(db *sql.DB) echo.HandlerFunc {
 	}
 }
 
+type RemoveUser struct {
+	ID int `json:"id"`
+}
+
 // Função para deletar usuários com base no seu ID:
 func DeleteUser(db *sql.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		id := c.Param("id")
+		var req RemoveUser
+		if err := c.Bind(&req); err != nil {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid request"})
+		}
+		id := req.ID
 		_, err := db.Exec("DELETE FROM usuario WHERE id=$1", id)
 		if err != nil {
 			fmt.Println("Error inserting user:", err) // Log para debbug
 			return fmt.Errorf("could not delete user: %w", err)
 		}
-		return c.String(http.StatusOK, fmt.Sprintf("User with ID %s deleted successfully", id))
+		return c.String(http.StatusOK, fmt.Sprintf("User with ID %d deleted successfully", id))
 	}
 }
