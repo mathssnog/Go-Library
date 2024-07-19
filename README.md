@@ -8,12 +8,12 @@
 - criar endpoint de cadastro de usuário [OK]
 - criar endpoint deletar usuario [OK]
 - criar endpoint deletar livro [OK]
-- criar endpoint de empréstimos
-- criar enpoint de devolução
+- criar endpoint de empréstimos [OK]
+- criar enpoint de devolução [OK]
 - criar tabela de livros [OK]
 - criar tabela de usuários [OK]
-- criar tabela de empréstimos/devolução
-- 
+- criar tabela de empréstimos/devolução [OK]
+
 
 
 Aplicação para gerenciamento de bibliotecas. Considerações:
